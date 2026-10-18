@@ -1,0 +1,3 @@
+# Sites that refuse connections from GitHub's servers but work from a normal connection.
+# Check these by hand when they change.
+https://www\.regsol\.be/
