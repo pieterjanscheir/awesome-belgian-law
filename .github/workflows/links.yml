@@ -1,0 +1,26 @@
+name: Links
+
+# Checks every link in the list on pull requests and once a week.
+on:
+    push:
+        branches: [main]
+    pull_request:
+    schedule:
+        - cron: '0 6 * * 1'
+    workflow_dispatch:
+
+jobs:
+    links:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: lycheeverse/lychee-action@v2
+              with:
+                  # Some government sites refuse bots (403) or rate-limit (429); those aren't dead
+                  args: >-
+                      --accept '200..=299,403,429'
+                      --max-retries 3
+                      --timeout 30
+                      --user-agent 'Mozilla/5.0 (compatible; awesome-belgian-law link check)'
+                      README.md CONTRIBUTING.md
+                  fail: true
