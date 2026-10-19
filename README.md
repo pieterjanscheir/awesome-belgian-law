@@ -131,13 +131,11 @@ This is a list of where to look, not legal advice.
 - [Justice-en-ligne](https://www.justice-en-ligne.be/) - Plain-language articles on judicial events and decisions (French).
 - [Droits Quotidiens](https://www.droitsquotidiens.be/) - Plain-language answers to everyday legal questions, a glossary and document templates (French). *Partly paid.*
 - [Lex4You](https://www.lex4you.be/) - Legal information for young people in plain language (Dutch).
-- [Legal World](https://www.legalworld.be/) - Legal news for practitioners (Dutch and French).
 
 ## Paid databases
 
 - [Jura](https://jura.kluwer.be/) - Wolters Kluwer's database of legislation, case law and doctrine. *Paid.*
 - [Stradalex](https://www.stradalex.com/) - Larcier-Intersentia's database of legislation, case law and doctrine. *Paid.*
-- [Jurisquare](https://www.jurisquare.be/) - Online library of Belgian law journals and books from several publishers. *Paid.*
 
 ## Contributing
 
