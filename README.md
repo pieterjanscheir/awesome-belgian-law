@@ -122,7 +122,6 @@ This is a list of where to look, not legal advice.
 - [RPV Calculator](https://www.rpv-calculator.be/) - Calculate the procedural indemnity (rechtsplegingsvergoeding / indemnité de procédure) for any amount in dispute and date, with the rate table, the indexation history and a connector for AI assistants.
 - [Bewindvoeringen.be](https://bewindvoeringen.be/) - Information for judicial administrators (bewindvoerders), with a fee calculator and indexation (Dutch).
 - [Verplaatsingsvergoeding](https://verplaatsingsvergoeding.scheir.eu/) - Calculate the travel allowance for court staff using the indexed tariffs of the royal decree.
-- [DaproNext](https://dapronext.vercel.app/) - Personal injury compensation calculator based on the Indicative Table, with mortality tables and interest calculations.
 - [VGPROVL Tools](https://tools.vgprovl.be/) - Small tools for court staff, such as converting between blood and breath alcohol levels and date calculations.
 - [BSARD](https://huggingface.co/datasets/maastrichtlawtech/bsard) - Dataset of over 22,600 Belgian statutory articles and 1,100 legal questions (French), for legal information retrieval research.
 
