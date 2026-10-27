@@ -1,20 +1,27 @@
 name: Links
 
-# Checks every link in the list on pull requests and once a week.
+# Checks every link in the list on pull requests and once a day.
 on:
     push:
         branches: [main]
     pull_request:
     schedule:
-        - cron: '0 6 * * 1'
+        - cron: '17 5 * * *'
     workflow_dispatch:
+
+# Checking links only needs to read the repository; the report job below asks for more.
+permissions:
+    contents: read
 
 jobs:
     links:
         runs-on: ubuntu-latest
+        outputs:
+            exit_code: ${{ steps.lychee.outputs.exit_code }}
         steps:
             - uses: actions/checkout@v4
             - uses: lycheeverse/lychee-action@v2
+              id: lychee
               with:
                   # Some government sites refuse bots (403) or rate-limit (429); those aren't dead
                   args: >-
@@ -23,4 +30,56 @@ jobs:
                       --timeout 30
                       --user-agent 'Mozilla/5.0 (compatible; awesome-belgian-law link check)'
                       README.md CONTRIBUTING.md
-                  fail: true
+                  fail: false
+
+            # Belgian government sites regularly time out or let a certificate expire for a day.
+            # That says nothing about a pull request, so only links that answer with an HTTP
+            # error (404, 410, 500...) fail the check. The daily run reports everything in an issue.
+            - name: Fail on dead links
+              if: github.event_name != 'schedule'
+              run: |
+                  test -f lychee/out.md
+                  # Lines read "* [404] ..." or, in checkbox mode, "- [ ] [404] ..."
+                  if grep -E '^(\* |- \[ \] )\[[45][0-9]{2}\b' lychee/out.md; then
+                      echo "::error::Dead links found, see the list above"
+                      exit 1
+                  fi
+
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+              if: github.event_name == 'schedule' && steps.lychee.outputs.exit_code != 0
+              with:
+                  name: lychee-report
+                  path: lychee/out.md
+
+    report:
+        needs: links
+        if: github.event_name == 'schedule'
+        runs-on: ubuntu-latest
+        permissions:
+            # To open, update or close the issue with the daily report
+            issues: write
+        env:
+            GH_TOKEN: ${{ github.token }}
+        steps:
+            # Only an issue this workflow opened carries the label and the bot as author
+            - name: Find the open report issue
+              id: issue
+              run: |
+                  number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --label link-check --author app/github-actions --json number --jq '.[0].number // empty')
+                  echo "number=$number" >> "$GITHUB_OUTPUT"
+
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+              if: needs.links.outputs.exit_code != 0
+              with:
+                  name: lychee-report
+            - uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
+              if: needs.links.outputs.exit_code != 0
+              with:
+                  title: Link check found problems
+                  content-filepath: ./out.md
+                  labels: link-check
+                  issue-number: ${{ steps.issue.outputs.number }}
+
+            - name: Close the report issue once every link works again
+              if: needs.links.outputs.exit_code == 0 && steps.issue.outputs.number != ''
+              run: gh issue close "${{ steps.issue.outputs.number }}" --repo "$GITHUB_REPOSITORY" --comment "Every link works again."
