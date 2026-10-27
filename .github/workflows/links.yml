@@ -9,13 +9,15 @@ on:
         - cron: '0 6 * * 1'
     workflow_dispatch:
 
+# Checking links only needs to read the repository; the report job below asks for more.
 permissions:
     contents: read
-    issues: write
 
 jobs:
     links:
         runs-on: ubuntu-latest
+        outputs:
+            exit_code: ${{ steps.lychee.outputs.exit_code }}
         steps:
             - uses: actions/checkout@v4
             - uses: lycheeverse/lychee-action@v2
@@ -42,9 +44,24 @@ jobs:
                       exit 1
                   fi
 
-            - name: Open an issue with the weekly report
+            - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
               if: github.event_name == 'schedule' && steps.lychee.outputs.exit_code != 0
-              uses: peter-evans/create-issue-from-file@v5
+              with:
+                  name: lychee-report
+                  path: lychee/out.md
+
+    report:
+        needs: links
+        if: github.event_name == 'schedule' && needs.links.outputs.exit_code != 0
+        runs-on: ubuntu-latest
+        permissions:
+            # To open the issue with the weekly report
+            issues: write
+        steps:
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+              with:
+                  name: lychee-report
+            - uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
               with:
                   title: Weekly link check found problems
-                  content-filepath: ./lychee/out.md
+                  content-filepath: ./out.md
