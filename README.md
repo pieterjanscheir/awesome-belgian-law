@@ -32,7 +32,7 @@ This is a list of where to look, not legal advice.
 - [Vlaamse Codex](https://codex.vlaanderen.be/) - Consolidated legislation of the Flemish Region and Community.
 - [WalLex](https://wallex.wallonie.be/) - Consolidated legislation of the Walloon Region.
 - [Gallilex](https://gallilex.cfwb.be/) - Decrees, orders and circulars of the Fédération Wallonie-Bruxelles (French Community).
-- [Ostbelgien Live - Juristische Datenbank](https://ostbelgienlive.be/desktopdefault.aspx/tabid-6055/) - Consolidated decrees and orders of the German-speaking Community, and German translations of federal texts.
+- [Ostbelgien Live - Juristische Datenbank](https://ostbelgienlive.be/desktopdefault.aspx/tabid-6055/) - Consolidated decrees and orders of the German-speaking Community, and some German translations of federal texts.
 - [Ostbelgien Rechtsterminologie](https://www.ostbelgienrecht.be/) - German legal terminology for Belgian law, including the Debeterm term database.
 
 ## Case law
