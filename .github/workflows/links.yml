@@ -39,7 +39,8 @@ jobs:
               if: github.event_name != 'schedule'
               run: |
                   test -f lychee/out.md
-                  if grep -E '^\* \[[45][0-9]{2}\]' lychee/out.md; then
+                  # Lines read "* [404] ..." or, in checkbox mode, "- [ ] [404] ..."
+                  if grep -E '^(\* |- \[ \] )\[[45][0-9]{2}\b' lychee/out.md; then
                       echo "::error::Dead links found, see the list above"
                       exit 1
                   fi
@@ -52,25 +53,33 @@ jobs:
 
     report:
         needs: links
-        if: github.event_name == 'schedule' && needs.links.outputs.exit_code != 0
+        if: github.event_name == 'schedule'
         runs-on: ubuntu-latest
         permissions:
-            # To open or update the issue with the daily report
+            # To open, update or close the issue with the daily report
             issues: write
+        env:
+            GH_TOKEN: ${{ github.token }}
         steps:
-            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-              with:
-                  name: lychee-report
-            # Update the open report issue instead of opening a new one every day
+            # Only an issue this workflow opened carries the label and the bot as author
             - name: Find the open report issue
               id: issue
-              env:
-                  GH_TOKEN: ${{ github.token }}
               run: |
-                  number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search 'in:title "Link check found problems"' --json number --jq '.[0].number // empty')
+                  number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --label link-check --author app/github-actions --json number --jq '.[0].number // empty')
                   echo "number=$number" >> "$GITHUB_OUTPUT"
+
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+              if: needs.links.outputs.exit_code != 0
+              with:
+                  name: lychee-report
             - uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
+              if: needs.links.outputs.exit_code != 0
               with:
                   title: Link check found problems
                   content-filepath: ./out.md
+                  labels: link-check
                   issue-number: ${{ steps.issue.outputs.number }}
+
+            - name: Close the report issue once every link works again
+              if: needs.links.outputs.exit_code == 0 && steps.issue.outputs.number != ''
+              run: gh issue close "${{ steps.issue.outputs.number }}" --repo "$GITHUB_REPOSITORY" --comment "Every link works again."

@@ -26,6 +26,7 @@ suggest a site without editing the list.
 ## Broken or outdated links
 
 A [daily check](.github/workflows/links.yml) tests every link and keeps an issue open while one
-fails. If a site moved or closed, open a pull request that updates or removes the entry.
+fails, closing it once they all work again. If a site moved or closed, open a pull request that
+updates or removes the entry.
 
 By contributing, you agree to release your contribution under [CC0](LICENSE).
