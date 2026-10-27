@@ -120,17 +120,17 @@ This is a list of where to look, not legal advice.
 - [data.gov.be](https://data.gov.be/) - The federal open data portal.
 - [be-legal-data](https://github.com/pieterjanscheir/be-legal-data) - Open data package (JSON and TypeScript) with every judicial canton, its municipalities and justice of the peace, and the legal and commercial interest rates.
 - [RPV Calculator](https://www.rpv-calculator.be/) - Calculate the procedural indemnity (rechtsplegingsvergoeding / indemnité de procédure) for any amount in dispute and date, with the rate table, the indexation history and a connector for AI assistants.
-- [Bewindvoeringen.be](https://bewindvoeringen.be/) - Information for judicial administrators (bewindvoerders), with a fee calculator and indexation (Dutch).
+- [Bewindvoeringen.be](https://bewindvoeringen.be/) - Information for judicial administrators (bewindvoerders), with a fee calculator and indexation meant mainly for the justices of the peace in East and West Flanders (Dutch).
 - [Verplaatsingsvergoeding](https://verplaatsingsvergoeding.scheir.eu/) - Calculate the travel allowance for court staff using the indexed tariffs of the royal decree.
 - [VGPROVL Tools](https://tools.vgprovl.be/) - Small tools for court staff, such as converting between blood and breath alcohol levels and date calculations.
-- [GDW Scheir tools](https://gdwscheir.be/) - Free tools from a Ghent bailiff's office: compile a debt claim from unpaid invoices with interest and lump-sum compensation, and calculate the lump-sum compensation for consumer debts under the Act of 4 May 2023.
+- [GDW Scheir tools](https://gdwscheir.be/tools) - Free calculators from a Ghent bailiff's office for interest and for the lump-sum compensation (forfaitaire vergoeding) on consumer debts under the Act of 4 May 2023.
 - [BSARD](https://huggingface.co/datasets/maastrichtlawtech/bsard) - Dataset of over 22,600 Belgian statutory articles and 1,100 legal questions (French), for legal information retrieval research.
 
 ## News and commentary
 
 - [Justice-en-ligne](https://www.justice-en-ligne.be/) - Plain-language articles on judicial events and decisions (French).
 - [Droits Quotidiens](https://www.droitsquotidiens.be/) - Plain-language answers to everyday legal questions, a glossary and document templates (French). *Partly paid.*
-- [Lex4You](https://www.lex4you.be/) - Legal information for young people in plain language (Dutch).
+- [Lex4You](https://www.lex4you.be/) - Securex's legal information on employment and social law, written for employers and HR.
 
 ## Paid databases
 

@@ -25,7 +25,7 @@ suggest a site without editing the list.
 
 ## Broken or outdated links
 
-A [weekly check](.github/workflows/links.yml) tests every link and opens an issue when one
+A [daily check](.github/workflows/links.yml) tests every link and keeps an issue open while one
 fails. If a site moved or closed, open a pull request that updates or removes the entry.
 
 By contributing, you agree to release your contribution under [CC0](LICENSE).
