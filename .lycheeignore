@@ -2,6 +2,6 @@
 # Check these by hand when they change.
 
 # Refuses connections from GitHub's servers
-https://www\.regsol\.be/
+^https://www\.regsol\.be/
 # Its server breaks the HTTP/2 connection the checker opens
-https://comitep\.be/
+^https://comitep\.be/
