@@ -1,3 +1,7 @@
-# Sites that refuse connections from GitHub's servers but work from a normal connection.
+# Sites the link checker can't reach but that work in a normal browser.
 # Check these by hand when they change.
+
+# Refuses connections from GitHub's servers
 https://www\.regsol\.be/
+# Its server breaks the HTTP/2 connection the checker opens
+https://comitep\.be/
